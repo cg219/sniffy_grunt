@@ -30,21 +30,18 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     sniffy: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
+      options: {
+        search: {
+          "#bg" : "blue.jpg",
+          "#copyA" : "darkgrey.png",
+          "#copyB" : "gold.png",
+          "#another" : "green.png",
+          "#sure" : "red.jpg"
         }
       },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
+      test: {
+        src: ["test/imgs"],
+        dest: "test/output/img.js"
       }
     },
 
