@@ -1,7 +1,7 @@
 {
   "name": "grunt-sniffy",
   "description": "Create a Sniffy Object from a directory of imgs.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "homepage": "https://github.com/cg219/grunt-sniffy",
   "author": {
     "name": "Clemente Gomez",
