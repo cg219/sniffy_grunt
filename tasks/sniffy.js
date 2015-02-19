@@ -126,6 +126,9 @@ module.exports = function(grunty) {
       }
       else{
         grunty.log.ok("Sniffy Object Not Created because HTML contains no images");
+
+        grunty.file.write(file.dest, html.toString());
+        grunty.log.ok("HTML Created: " + file.dest);
       }
     })
   })
