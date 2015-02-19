@@ -1,0 +1,19 @@
+#foo{
+	background: url("../imgs/blue.jpg");
+}
+
+#bar{
+	background-image: url("../imgs/blue.jpg");
+}
+
+#foobar{
+	background-image: url('../imgs/gold.png');
+}
+
+#barfoo{
+	background-image: url( '../imgs/gold.png');
+}
+
+#barnofoo{
+	background-image: url( "../imgs/gold.png" );
+}

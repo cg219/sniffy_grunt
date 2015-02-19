@@ -56,6 +56,14 @@ module.exports = function(grunt) {
       }
     },
 
+    sniffyCSS: {
+      test: {
+        files: {
+          "test/output/test.css" : ["test/test.css"]
+        }
+      }
+    },
+
     // Unit tests.
     nodeunit: {
       tests: ['test/*_test.js']

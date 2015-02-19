@@ -67,7 +67,8 @@ module.exports = function(grunty) {
       tag : "img",
       attribute : "src",
       objectName: "sniffyObject",
-      output: "img.js"
+      output: "img.js",
+      keepLocal: true
     });
     var sniffyObject = {
       tag: options.tag,
@@ -105,7 +106,8 @@ module.exports = function(grunty) {
       grunty.file.write(options.output, "var " + options.objectName + " = " + JSON.stringify(sniffyObject));
       grunty.log.ok("Sniffy Object Created: " + options.output);
 
-      var sniffyScript = "\t<script src='" + options.output + "'></script>\n";
+      var outputLink = keepLocal ? _path.basename(options.output) : options.output;
+      var sniffyScript = "\t<script src='" + outputLink + "'></script>\n";
       var script = "\t<script>\n\t\tvar sniffy = new Sniffy(" + options.objectName + ");\n\t\tsniffy.sniff();\n\t</script>\n";
 
       $("body").append(sniffyScript);
@@ -117,42 +119,32 @@ module.exports = function(grunty) {
     })
   })
 
-  // grunty.registerMultiTask("sniffyCSS", "Encode CSS Background Images with Base64.", function(){
-  //   var options = this.options({
+  grunty.registerMultiTask("sniffyCSS", "Encode CSS Background Images with Base64.", function(){
+    var options = this.options({
 
-  //   });
+    });
 
-  //   this.files.forEach(function(file){
-  //     var html = file.src.filter(function(path){
-  //       if(!grunty.file.exists){
-  //         return false;
-  //       }
-  //       return true;
-  //     }).map(function(path){
-  //       return grunty.file.read(path)
-  //     });
+    this.files.forEach(function(file){
+      var css = file.src.filter(function(path){
+        if(!grunty.file.exists){
+          return false;
+        }
+        return true;
+      }).map(function(path){
+        return grunty.file.read(path)
+      });
 
-  //     var $ = cheerio.load(html.toString());
+      var urlRegex = /url\(\s?(?:\"|\')([^(?!\"|\')]+)(?:\"|\')\s?\)/ig;
 
-  //     $(options.tag).each(function(index, element){
-  //       var $this = $(this);
-  //       var src = $this.attr(options.attribute);
-  //       var id = $this.attr("id");
-  //       var abspath = _path.join(_path.dirname(file.src), src);
-  //       var encoded = convertImage(grunty, abspath);
+      css = css.toString();
+      var newCSS = css.replace(urlRegex, function(match, url, offset, string){
+        var abspath = _path.join(_path.dirname(file.dest), url)
+        return "url(" + convertImage(grunty, abspath) + ")";
+      })
 
-  //       if(id){
-  //         $this.attr(options.attribute, "");
-  //         search["#" + id] = encoded;
-  //       }
-  //     });
-
-  //     $("body").append(sniffyScript);
-  //     $("body").append(script);
-
-  //     grunty.file.write(file.dest, $.html());
-  //     grunty.log.ok("HTML Created: " + file.dest);
+      grunty.file.write(file.dest, newCSS);
+      grunty.log.ok("CSS Created: " + file.dest);
       
-  //   })
-  // })
+    })
+  })
 };
