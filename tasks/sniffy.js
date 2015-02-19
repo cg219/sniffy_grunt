@@ -78,7 +78,7 @@ module.exports = function(grunty) {
 
     this.files.forEach(function(file){
       var html = file.src.filter(function(path){
-        if(!grunty.file.exists){
+        if(!grunty.file.exists(path)){
           return false;
         }
         return true;
@@ -126,7 +126,7 @@ module.exports = function(grunty) {
 
     this.files.forEach(function(file){
       var css = file.src.filter(function(path){
-        if(!grunty.file.exists){
+        if(!grunty.file.exists(path)){
           return false;
         }
         return true;
@@ -139,7 +139,10 @@ module.exports = function(grunty) {
       css = css.toString();
       var newCSS = css.replace(urlRegex, function(match, url, offset, string){
         var abspath = _path.join(_path.dirname(file.dest), url)
-        return "url(" + convertImage(grunty, abspath) + ")";
+        if(grunty.file.exists(abspath)){
+          return "url(" + convertImage(grunty, abspath) + ")";
+        }
+        return match;
       })
 
       grunty.file.write(file.dest, newCSS);

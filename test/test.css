@@ -17,3 +17,7 @@
 #barnofoo{
 	background-image: url( "../imgs/gold.png" );
 }
+
+#nobarnofoo{
+	background-image: url( "imgs/orange.png" );
+}
