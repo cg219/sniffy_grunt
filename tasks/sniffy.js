@@ -30,8 +30,8 @@ module.exports = function(grunty) {
   }
   var checkObjectSize = function(object){
     var size = 0, key;
-    for (key in obj) {
-      if (obj.hasOwnProperty(key)) size++;
+    for (key in object) {
+      if (object.hasOwnProperty(key)) size++;
     }
     return size;
   }
