@@ -28,6 +28,13 @@ module.exports = function(grunty) {
       return encoded;
     }
   }
+  var checkObjectSize = function(object){
+    var size = 0, key;
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+  }
 
   grunty.registerMultiTask("sniffy", "Create a Sniffy Object from a directory of imgs.", function(){
     var options = this.options({
@@ -103,19 +110,23 @@ module.exports = function(grunty) {
 
       sniffyObject.search = search;
 
-      grunty.file.write(options.output, "var " + options.objectName + " = " + JSON.stringify(sniffyObject));
-      grunty.log.ok("Sniffy Object Created: " + options.output);
+      if(checkObjectSize(search) > 0){
+        grunty.file.write(options.output, "var " + options.objectName + " = " + JSON.stringify(sniffyObject));
+        grunty.log.ok("Sniffy Object Created: " + options.output);
 
-      var outputLink = options.keepLocal ? _path.basename(options.output) : options.output;
-      var sniffyScript = "\t<script src='" + outputLink + "'></script>\n";
-      var script = "\t<script>\n\t\tvar sniffy = new Sniffy(" + options.objectName + ");\n\t\tsniffy.sniff();\n\t</script>\n";
+        var outputLink = options.keepLocal ? _path.basename(options.output) : options.output;
+        var sniffyScript = "\t<script src='" + outputLink + "'></script>\n";
+        var script = "\t<script>\n\t\tvar sniffy = new Sniffy(" + options.objectName + ");\n\t\tsniffy.sniff();\n\t</script>\n";
 
-      $("body").append(sniffyScript);
-      $("body").append(script);
+        $("body").append(sniffyScript);
+        $("body").append(script);
 
-      grunty.file.write(file.dest, $.html());
-      grunty.log.ok("HTML Created: " + file.dest);
-      
+        grunty.file.write(file.dest, $.html());
+        grunty.log.ok("HTML Created: " + file.dest);
+      }
+      else{
+        grunty.log.ok("Sniffy Object Not Created because HTML contains no images");
+      }
     })
   })
 
