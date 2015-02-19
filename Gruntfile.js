@@ -35,13 +35,24 @@ module.exports = function(grunt) {
           "#bg" : "blue.jpg",
           "#copyA" : "darkgrey.png",
           "#copyB" : "gold.png",
-          "#another" : "green.png",
-          "#sure" : "red.jpg"
+          "#another" : "green.png"
         }
       },
       test: {
         src: ["test/imgs"],
         dest: "test/output/img.js"
+      }
+    },
+
+    sniffyHTML: {
+      options: {
+        output: "test/img.js",
+        sniffy: "test/sniffy.js"
+      },
+      test: {
+        files: {
+          "test/output/test.html" : ["test/test.html"]
+        }
       }
     },
 
