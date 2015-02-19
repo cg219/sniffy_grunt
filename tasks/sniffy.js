@@ -96,7 +96,7 @@ module.exports = function(grunty) {
 
         if(id){
           $this.attr(options.attribute, "");
-          search[id] = encoded;
+          search["#" + id] = encoded;
         }
       });
 
