@@ -106,7 +106,7 @@ module.exports = function(grunty) {
       grunty.file.write(options.output, "var " + options.objectName + " = " + JSON.stringify(sniffyObject));
       grunty.log.ok("Sniffy Object Created: " + options.output);
 
-      var outputLink = keepLocal ? _path.basename(options.output) : options.output;
+      var outputLink = options.keepLocal ? _path.basename(options.output) : options.output;
       var sniffyScript = "\t<script src='" + outputLink + "'></script>\n";
       var script = "\t<script>\n\t\tvar sniffy = new Sniffy(" + options.objectName + ");\n\t\tsniffy.sniff();\n\t</script>\n";
 
