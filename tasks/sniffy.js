@@ -103,7 +103,7 @@ module.exports = function(grunty) {
       sniffyObject.search = search;
 
       grunty.file.write(options.output, "var " + options.objectName + " = " + JSON.stringify(sniffyObject));
-      grunty.log.ok("Sniffy Object Created: " + file.dest);
+      grunty.log.ok("Sniffy Object Created: " + options.output);
 
       var sniffyScript = "<script src='" + options.output + "'></script>";
       var script = "<script>var sniffy = new Sniffy(" + options.objectName + ") sniffy.sniff();</script>";
