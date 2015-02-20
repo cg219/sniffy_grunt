@@ -102,7 +102,7 @@ module.exports = function(grunty) {
         var abspath = _path.join(_path.dirname(file.src), src);
         var encoded = convertImage(grunty, abspath);
 
-        if(id){
+        if(id && encoded){
           $this.attr(options.attribute, "");
           search["#" + id] = encoded;
         }

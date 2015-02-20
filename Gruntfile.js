@@ -51,7 +51,7 @@ module.exports = function(grunt) {
       },
       test: {
         files: {
-          "test/output/test.html" : ["test/test.html"]
+          "test/output/test2.html" : ["test/test2.html"]
         }
       }
     },
